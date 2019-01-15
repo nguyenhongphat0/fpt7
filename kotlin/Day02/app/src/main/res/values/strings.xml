@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Day02</string>
+    <string name="title_activity_input">InputActivity</string>
+</resources>
