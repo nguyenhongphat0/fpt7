@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Day03</string>
+    <string name="title_activity_send_sms">SendSMSActivity</string>
+</resources>
