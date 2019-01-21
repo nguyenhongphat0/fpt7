@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="txtUsername" type="id"/>
+    <item name="txtFullname" type="id"/>
+    <item name="btnInput" type="id"/>
+</resources>
