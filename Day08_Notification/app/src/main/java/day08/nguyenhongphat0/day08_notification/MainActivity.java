@@ -1,10 +1,12 @@
 package day08.nguyenhongphat0.day08_notification;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickToSend(View view) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle("Content title" + numMsg);
-        builder.setContentText("Content text: Message has been received" + numMsg);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel08");
+        builder.setContentTitle("Content title");
+        builder.setContentText("Content text: Message has been received");
         builder.setTicker("Ticker: Message Alert");
         builder.setSmallIcon(R.drawable.ic_action_unread);
         builder.setNumber(++numMsg);
@@ -34,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pendingIntent = stack.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(notiID, builder.build());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel chanel = new NotificationChannel("channel08", "Testing notification channel", NotificationManager.IMPORTANCE_HIGH);
+            manager.createNotificationChannel(chanel);
+        }
+        manager.notify(numMsg, builder.build());
     }
 
     public void clickToCancel(View view) {
@@ -46,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickToSendMultipleTime(View view) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        String channelID = "channel08";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID);
         builder.setContentTitle("Content title" + numMsg);
         builder.setContentText("Content text: Message has been received" + numMsg);
         builder.setTicker("Ticker: Message Alert");
@@ -65,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pendingIntent = stack.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            manager.createNotificationChannel(new NotificationChannel(channelID, "Multiple Notify", NotificationManager.IMPORTANCE_DEFAULT));
+        }
         manager.notify(notiID, builder.build());
     }
 }
