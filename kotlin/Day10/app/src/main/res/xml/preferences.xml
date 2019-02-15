@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Category 1">
+        <EditTextPreference android:key="username" android:title="Username" android:summary="The username" android:defaultValue="Admin"></EditTextPreference>
+        <SwitchPreference android:key="switch" android:title="Enabled" android:defaultValue="false"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Category 2">
+        <CheckBoxPreference android:key="remember" android:defaultValue="false" android:title="Remember Me"></CheckBoxPreference>
+        <RingtonePreference android:key="rington" android:defaultValue="false" android:title="Ring tone" android:summary="Something cool"></RingtonePreference>
+    </PreferenceCategory>
+</PreferenceScreen>
