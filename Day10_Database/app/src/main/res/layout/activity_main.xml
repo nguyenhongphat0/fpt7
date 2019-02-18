@@ -17,6 +17,9 @@
         android:layout_height="wrap_content"
         android:text="ACCESS PREFERENCE"
         android:onClick="clickToPreference"/>
-
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Access file"
+        android:onClick="clickToFile"/>
 </LinearLayout>

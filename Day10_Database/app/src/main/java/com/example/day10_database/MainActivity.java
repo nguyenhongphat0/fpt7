@@ -17,4 +17,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MyPreferenceActivity.class);
         startActivity(intent);
     }
+
+    public void clickToFile(View view) {
+        Intent intent = new Intent(this, PhatNHFileActivity.class);
+        startActivity(intent);
+    }
 }
