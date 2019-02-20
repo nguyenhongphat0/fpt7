@@ -90,9 +90,8 @@ public class PhatNHFileActivity extends AppCompatActivity {
     public void clickToSaveExternal(View view) {
         String str = edtName.getText().toString();
         File sdCard = Environment.getExternalStorageDirectory();
-//        String realPath = sdCard.getAbsolutePath();
-        String realPath = "/sdcard";
-        File directory = new File(realPath, "/Test");
+        String realPath = sdCard.getAbsolutePath();
+        File directory = new File(realPath + "/MyFile");
         directory.mkdir();
         File file = new File(directory, "myfile.txt");
         FileOutputStream fos = null;
@@ -109,5 +108,28 @@ public class PhatNHFileActivity extends AppCompatActivity {
     }
 
     public void clickToLoadExternal(View view) {
+        String str = edtName.getText().toString();
+        File sdCard = Environment.getExternalStorageDirectory();
+        String realPath = sdCard.getAbsolutePath();
+        File directory = new File(realPath + "/MyFile");
+        directory.mkdir();
+        File file = new File(directory, "myfile.txt");
+        FileInputStream fis = null;
+        InputStreamReader isr = null;
+        BufferedReader br = null;
+        String s = "";
+        try {
+            fis = new FileInputStream(file);
+            isr = new InputStreamReader(fis);
+            br = new BufferedReader(isr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                s += line;
+            }
+            edtName.setText(s);
+            txtResult.setText("Load file from sdCard success");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
