@@ -8,7 +8,7 @@ import com.fpt.phatnhse63348.sqlite.model.Message;
 import com.fpt.phatnhse63348.sqlite.model.User;
 
 public class MessengerDbHelper extends SQLiteOpenHelper {
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 4;
     public static final String DB_NAME = "Messenger.db";
 
     public MessengerDbHelper(Context context) {
@@ -24,11 +24,9 @@ public class MessengerDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion > oldVersion) {
-            db.execSQL(User.SQL_DELETE_ENTRIES);
-            db.execSQL(Message.SQL_DROP_ENTRY);
-            onCreate(db);
-        }
+        db.execSQL(User.SQL_DELETE_ENTRIES);
+        db.execSQL(Message.SQL_DROP_ENTRY);
+        onCreate(db);
     }
 
     @Override

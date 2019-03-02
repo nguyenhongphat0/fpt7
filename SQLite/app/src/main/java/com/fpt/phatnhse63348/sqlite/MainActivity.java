@@ -1,5 +1,6 @@
 package com.fpt.phatnhse63348.sqlite;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,32 +23,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new MessengerDbHelper(this);
-        insertDemoUser();
         attachEvent();
-    }
-
-    private void insertDemoUser() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(User.UserEntry.COLUMN_NAME_USERNAME, "admin");
-        values.put(User.UserEntry.COLUMN_NAME_PASSWORD, "password");
-        long id = db.insert(User.UserEntry.TABLE_NAME, null, values);
-        Toast.makeText(this, "User with " + id + " created successfully", Toast.LENGTH_LONG).show();
     }
 
     private void attachEvent() {
         final TextView usernameTV = findViewById(R.id.username);
         final TextView passwordTV = findViewById(R.id.password);
         Button loginButton = findViewById(R.id.loginButton);
+        Button registerButton = findViewById(R.id.registerButton);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = usernameTV.getText().toString();
                 String password = passwordTV.getText().toString();
-                if (User.checkLogin(dbHelper, username, password)) {
-                    startActivity(new Intent(MainActivity.this, MessagesActivity.class));
+                int ID = User.checkLogin(dbHelper, username, password);
+                if (ID >= 0) {
+                    User.LOGGED_USER_ID = ID;
+                    User.LOGGED_USER_USERNAME = username;
+                    Intent intent = new Intent(MainActivity.this, MessagesActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Error login for user " + username, Toast.LENGTH_LONG).show();
                     passwordTV.setText("");
@@ -55,5 +51,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+            }
+        });
     }
 }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SQLite</string>
     <string name="title_activity_messages">MessagesActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>
