@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SQLite_Jaegers</string>
+    <string name="jaeger_description">Created by %1$s. Height: %2$f, weight: %3$f</string>
+</resources>
