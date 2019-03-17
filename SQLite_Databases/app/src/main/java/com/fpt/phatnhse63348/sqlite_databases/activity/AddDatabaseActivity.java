@@ -2,6 +2,7 @@ package com.fpt.phatnhse63348.sqlite_databases.activity;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -82,11 +83,18 @@ public class AddDatabaseActivity extends AppCompatActivity {
 
     private void commitDatabase(boolean update) {
         ContentValues database = new ContentValues();
-        database.put(Database.COLUMN_NAME, name.getText().toString());
-        database.put(Database.COLUMN_DESCRIPTION, description.getText().toString());
-        database.put(Database.COLUMN_CREATOR, creator.getText().toString());
-        database.put(Database.COLUMN_VERSION, version.getText().toString());
-        database.put(Database.COLUMN_TYPE, typeGroup.getCheckedRadioButtonId());
+        String dbName = name.getText().toString();
+        if (dbName.equals("")) {
+            new AlertDialog.Builder(AddDatabaseActivity.this)
+                    .setTitle("No title")
+                    .setMessage("A database must have a title, please fill in the title!")
+                    .show();
+        } else {
+            database.put(Database.COLUMN_NAME, dbName);
+            database.put(Database.COLUMN_DESCRIPTION, description.getText().toString());
+            database.put(Database.COLUMN_CREATOR, creator.getText().toString());
+            database.put(Database.COLUMN_VERSION, version.getText().toString());
+            database.put(Database.COLUMN_TYPE, typeGroup.getCheckedRadioButtonId());
 //        switch (typeGroup.getCheckedRadioButtonId()) {
 //            case R.id.typeSQL:
 //                database.put(Database.COLUMN_TYPE, "SQL");
@@ -95,15 +103,16 @@ public class AddDatabaseActivity extends AppCompatActivity {
 //                database.put(Database.COLUMN_TYPE, "No SQL");
 //                break;
 //        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(createdDate.getYear(), createdDate.getMonth(), createdDate.getDayOfMonth());
-        database.put(Database.COLUMN_CREATED_DATE, calendar.getTime().toString());
-        if (update) {
-            Database.update(helper, id, database);
-        } else {
-            Database.insert(helper, database);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(createdDate.getYear(), createdDate.getMonth(), createdDate.getDayOfMonth());
+            database.put(Database.COLUMN_CREATED_DATE, calendar.getTime().toString());
+            if (update) {
+                Database.update(helper, id, database);
+            } else {
+                Database.insert(helper, database);
+            }
+            finish();
         }
-        finish();
     }
 
     @Override
